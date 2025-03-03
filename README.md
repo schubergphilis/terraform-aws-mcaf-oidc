@@ -1,6 +1,6 @@
 # terraform-aws-mcaf-oidc
 
-Terraform module for configuring an IAM OIDC provider and creating associated roles in AWS.
+Terraform module to configure an IAM OIDC identity provider in AWS and create roles using this provider.
 
 The root module is generic and can manage any OIDC provider. For easier setup, we also provide submodules for `GitLab` and `GitHub` that extend the root module with pre-configured defaults.
 
