@@ -12,6 +12,11 @@ variable "oidc_provider" {
     url            = string
   })
   description = "Configuration of the OIDC provider."
+
+  validation {
+    condition     = can(regex("^https", var.oidc_provider.url))
+    error_message = "URL should start with 'https'."
+  }
 }
 
 variable "iam_roles" {
