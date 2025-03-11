@@ -6,10 +6,8 @@ variable "create_oidc_provider" {
 
 variable "oidc_provider" {
   type = object({
-    client_ids     = optional(list(string), ["https://gitlab.com"])
-    name           = optional(string, "GitLab")
-    thumbprint_url = optional(string, "https://gitlab.com")
-    url            = optional(string, "https://gitlab.com")
+    name = optional(string, "GitLab")
+    url  = optional(string, "https://gitlab.com")
   })
   default     = {}
   description = "Configuration of the OIDC provider."
