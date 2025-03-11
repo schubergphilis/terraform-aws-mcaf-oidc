@@ -9,10 +9,12 @@ module "github_oidc" {
     "example-role" = {
       policy_arns = ["arn:aws:iam::aws:policy/ReadOnlyAccess"]
 
-      subject_filter = {
-        repository = "MyOrg/MyRepo"
-        branch     = "main"
-      }
+      subject_filters = [
+        {
+          repository = "MyOrg/MyRepo"
+          branch     = "main"
+        }
+      ]
     }
   }
 }

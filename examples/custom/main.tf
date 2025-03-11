@@ -14,8 +14,8 @@ module "custom_oidc" {
 
   iam_roles = {
     "example-role" = {
-      policy_arns    = ["arn:aws:iam::aws:policy/ReadOnlyAccess"]
-      subject_filter = "1234567890"
+      policy_arns     = ["arn:aws:iam::aws:policy/ReadOnlyAccess"]
+      subject_filters = ["1234567890"]
     }
   }
 }

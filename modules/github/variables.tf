@@ -24,12 +24,12 @@ variable "iam_roles" {
     policy                   = optional(string, null)
     policy_arns              = optional(set(string), [])
 
-    subject_filter = object({
+    subject_filters = list(object({
       repository  = string
       branch      = optional(string)
       environment = optional(string)
       tag         = optional(string)
-    })
+    }))
   }))
 
   default     = {}
@@ -37,22 +37,20 @@ variable "iam_roles" {
 
   validation {
     condition = alltrue([
-      for role in values(var.iam_roles) : (length(compact([
-        role.subject_filter.branch != null ? role.subject_filter.branch : null,
-        role.subject_filter.environment != null ? role.subject_filter.environment : null,
-        role.subject_filter.tag != null ? role.subject_filter.tag : null
-        ])) == 1
-      )
+      for role in values(var.iam_roles) : alltrue([
+        for filter in role.subject_filters : length(compact([filter.branch, filter.environment, filter.tag])) == 1
+      ])
     ])
-    error_message = "For subject_filter, exactly one of branch, environment, or tag must be specified."
+    error_message = "For each subject_filter, exactly one of branch, environment, or tag must be specified."
   }
 
   validation {
     condition = alltrue([
-      for role in values(var.iam_roles) : (length(regexall("^[A-Za-z0-9_.-]+?/([A-Za-z0-9_.:/\\-\\*]+)$", role.subject_filter.repository)) > 0
-      )
+      for role in values(var.iam_roles) : alltrue([
+        for filter in role.subject_filters : length(regexall("^[A-Za-z0-9_.-]+?/([A-Za-z0-9_.:/\\-\\*]+)$", filter.repository)) > 0
+      ])
     ])
-    error_message = "For subject_filter, the repository must be in the organization/repository format."
+    error_message = "For each subject_filter, the repository must be in the organization/repository format."
   }
 }
 

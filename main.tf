@@ -43,10 +43,11 @@ data "aws_iam_policy_document" "assume_role_policy" {
       identifiers = [local.provider.arn]
     }
 
+    # https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_iam-condition-keys.html#available-keys-for-iam
     condition {
-      test     = "StringLike"
+      test     = "ForAnyValue:StringLike"
       variable = "${local.provider.url}:sub"
-      values   = each.value.subject_filter
+      values   = each.value.subject_filters
     }
   }
 }

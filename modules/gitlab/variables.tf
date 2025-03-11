@@ -22,19 +22,23 @@ variable "iam_roles" {
     policy                   = optional(string, null)
     policy_arns              = optional(set(string), [])
 
-    subject_filter = object({
+    subject_filters = list(object({
       project_path = string
       ref_type     = string
       ref          = string
-    })
+    }))
   }))
 
   default     = {}
   description = "Configuration for IAM roles, the key of the map is used as the IAM role name. Unless overwritten by setting the name field."
 
   validation {
-    condition     = alltrue([for o in var.iam_roles : can(regex("^(\\*|branch|tag)$", o.subject_filter.ref_type))])
-    error_message = "ref_type must be '*', 'branch', or 'tag'."
+    condition = alltrue([
+      for role in values(var.iam_roles) : alltrue([
+        for filter in role.subject_filters : can(regex("^(\\*|branch|tag)$", filter.ref_type))
+      ])
+    ])
+    error_message = "For each subject_filter, ref_type must be '*', 'branch', or 'tag'."
   }
 }
 

@@ -27,7 +27,7 @@ variable "iam_roles" {
     permissions_boundary_arn = optional(string, "")
     policy                   = optional(string, null)
     policy_arns              = optional(set(string), [])
-    subject_filter           = string
+    subject_filters          = list(string)
   }))
   default     = {}
   description = "Configuration of the IAM roles, the key of the map is used as the IAM role name. Unless overwritten by setting the name field."

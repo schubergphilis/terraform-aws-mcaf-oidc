@@ -9,11 +9,13 @@ module "gitlab_oidc" {
     "example-role" = {
       policy_arns = ["arn:aws:iam::aws:policy/ReadOnlyAccess"]
 
-      subject_filter = {
-        project_path = "mygroup/*"
-        ref_type     = "branch"
-        ref          = "main"
-      }
+      subject_filters = [
+        {
+          project_path = "mygroup/*"
+          ref_type     = "branch"
+          ref          = "main"
+        }
+      ]
     }
   }
 }
