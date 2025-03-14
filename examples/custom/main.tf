@@ -2,6 +2,8 @@ provider "aws" {
   region = "eu-west-1"
 }
 
+provider "corefunc" {}
+
 module "custom_oidc" {
   source = "../.."
 
