@@ -13,6 +13,7 @@ IMPORTANT: We do not pin modules to versions in our examples. We highly recommen
 |------|---------|
 | <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.3 |
 | <a name="requirement_aws"></a> [aws](#requirement\_aws) | >= 4.0.0 |
+| <a name="requirement_corefunc"></a> [corefunc](#requirement\_corefunc) | ~> 1.0 |
 | <a name="requirement_tls"></a> [tls](#requirement\_tls) | >= 4.0.0 |
 
 ## Providers

@@ -2,6 +2,8 @@ provider "aws" {
   region = "eu-west-1"
 }
 
+provider "corefunc" {}
+
 module "github_oidc" {
   source = "../..//modules/github"
 
