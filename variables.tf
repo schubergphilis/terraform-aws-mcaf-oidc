@@ -14,8 +14,8 @@ variable "oidc_provider" {
   description = "Configuration of the OIDC provider."
 
   validation {
-    condition     = can(regex("^https", var.oidc_provider.url))
-    error_message = "URL should start with 'https'."
+    condition     = can(regex("^https", var.oidc_provider.url)) && !endswith(var.oidc_provider.url, "/")
+    error_message = "URL should start with 'https' and not end with a '/'."
   }
 }
 

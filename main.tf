@@ -1,15 +1,22 @@
 locals {
   provider = var.create_oidc_provider ? aws_iam_openid_connect_provider.default["create"] : data.aws_iam_openid_connect_provider.default["create"]
+
+  # We avoid using https scheme because the Hashicorp TLS provider has started following redirects starting v4.
+  # See https://github.com/hashicorp/terraform-provider-tls/issues/249
+  thumbprint_url_splitted = regex("^https://([^/]+)(/.*)$", "${var.oidc_provider.thumbprint_url}/")
+  thumbprint_url = format(
+    "tls://%s:443%s",
+    local.thumbprint_url_splitted[0],
+    local.thumbprint_url_splitted[1]
+  )
 }
 
 ################################################################################
 # OIDC Provider
 ################################################################################
 
-# We avoid using https scheme because the Hashicorp TLS provider has started following redirects starting v4.
-# See https://github.com/hashicorp/terraform-provider-tls/issues/249
 data "tls_certificate" "default" {
-  url = "${replace(var.oidc_provider.thumbprint_url, "https", "tls")}:443"
+  url = local.thumbprint_url
 }
 
 data "aws_iam_openid_connect_provider" "default" {
