@@ -45,13 +45,10 @@ data "aws_iam_policy_document" "assume_role_policy" {
     }
 
     # https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_iam-condition-keys.html#available-keys-for-iam
-    dynamic "condition" {
-      for_each = each.value.subject_filters != [] ? [each.value.subject_filters] : []
-      content {
-        test     = "ForAnyValue:StringLike"
-        variable = "${local.provider.url}:sub"
-        values   = condition.value
-      }
+    condition {
+      test     = "ForAnyValue:StringLike"
+      variable = "${local.provider.url}:sub"
+      values   = each.value.subject_filters
     }
 
     dynamic "condition" {
