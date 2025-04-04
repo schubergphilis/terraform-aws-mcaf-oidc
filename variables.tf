@@ -21,6 +21,7 @@ variable "oidc_provider" {
 
 variable "iam_roles" {
   type = map(object({
+    audience_filters         = optional(list(string), [])
     description              = optional(string, "Role assumed by the IAM OIDC provider")
     name                     = optional(string, null)
     path                     = optional(string, "/")
