@@ -21,6 +21,7 @@ variable "oidc_provider" {
 
 variable "iam_roles" {
   type = map(object({
+    audience_filters         = optional(list(string), [])
     description              = optional(string, "Role assumed by the IAM OIDC provider")
     name                     = optional(string, null)
     path                     = optional(string, "/")
@@ -28,7 +29,6 @@ variable "iam_roles" {
     policy                   = optional(string, null)
     policy_arns              = optional(set(string), [])
     subject_filters          = list(string)
-    audience_filters         = optional(list(string))
   }))
   default     = {}
   description = "Configuration of the IAM roles, the key of the map is used as the IAM role name. Unless overwritten by setting the name field."
