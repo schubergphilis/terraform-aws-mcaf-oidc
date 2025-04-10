@@ -9,7 +9,6 @@ module "custom_oidc" {
 
   oidc_provider = {
     client_ids     = ["sts.amazonaws.com"]
-    name           = "MyProvider"
     thumbprint_url = "https://example-domain.com/.well-known/openid-configuration"
     url            = "https://example-domain.com"
   }

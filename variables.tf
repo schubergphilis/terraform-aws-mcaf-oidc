@@ -7,7 +7,6 @@ variable "create_oidc_provider" {
 variable "oidc_provider" {
   type = object({
     client_ids     = list(string)
-    name           = string
     thumbprint_url = string
     url            = string
   })
