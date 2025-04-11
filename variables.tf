@@ -6,15 +6,26 @@ variable "create_oidc_provider" {
 
 variable "oidc_provider" {
   type = object({
-    client_ids     = list(string)
-    thumbprint_url = string
+    client_ids     = optional(list(string))
+    thumbprint_url = optional(string)
     url            = string
   })
   description = "Configuration of the OIDC provider."
 
   validation {
     condition     = can(regex("^https", var.oidc_provider.url))
-    error_message = "URL should start with 'https'."
+    error_message = "`url` should start with 'https'."
+  }
+
+  validation {
+    condition = (
+      !var.create_oidc_provider ||
+      (
+        var.oidc_provider.client_ids != null &&
+        var.oidc_provider.thumbprint_url != null
+      )
+    )
+    error_message = "When `var.create_oidc_provider` is true, `client_ids` and `thumbprint_url` must be provided."
   }
 }
 

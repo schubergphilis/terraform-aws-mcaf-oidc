@@ -10,6 +10,8 @@ locals {
 # We avoid using https scheme because the Hashicorp TLS provider has started following redirects starting v4.
 # See https://github.com/hashicorp/terraform-provider-tls/issues/249
 data "tls_certificate" "default" {
+  for_each = var.create_oidc_provider ? { create = true } : {}
+
   url = "tls://${local.thumbprint_url_parse.host}:443${local.thumbprint_url_parse.path}"
 }
 
@@ -24,7 +26,7 @@ resource "aws_iam_openid_connect_provider" "default" {
 
   url             = var.oidc_provider.url
   client_id_list  = var.oidc_provider.client_ids
-  thumbprint_list = [data.tls_certificate.default.certificates[0].sha1_fingerprint]
+  thumbprint_list = [data.tls_certificate.default["create"].certificates[0].sha1_fingerprint]
   tags            = var.tags
 }
 
