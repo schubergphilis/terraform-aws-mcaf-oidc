@@ -11,7 +11,7 @@ IMPORTANT: We do not pin modules to versions in our examples. We highly recommen
 
 | Name | Version |
 |------|---------|
-| <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.3 |
+| <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.9 |
 | <a name="requirement_aws"></a> [aws](#requirement\_aws) | >= 4.0.0 |
 | <a name="requirement_corefunc"></a> [corefunc](#requirement\_corefunc) | ~> 1.0 |
 | <a name="requirement_tls"></a> [tls](#requirement\_tls) | >= 4.0.0 |
@@ -42,7 +42,7 @@ IMPORTANT: We do not pin modules to versions in our examples. We highly recommen
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
-| <a name="input_oidc_provider"></a> [oidc\_provider](#input\_oidc\_provider) | Configuration of the OIDC provider. | <pre>object({<br/>    client_ids     = list(string)<br/>    thumbprint_url = string<br/>    url            = string<br/>  })</pre> | n/a | yes |
+| <a name="input_oidc_provider"></a> [oidc\_provider](#input\_oidc\_provider) | Configuration of the OIDC provider. | <pre>object({<br/>    client_ids     = optional(list(string))<br/>    thumbprint_url = optional(string)<br/>    url            = string<br/>  })</pre> | n/a | yes |
 | <a name="input_create_oidc_provider"></a> [create\_oidc\_provider](#input\_create\_oidc\_provider) | Toggle to whether or not create the oidc provider. Put to false to not create the oidc provider but instead data source it and create roles only. | `bool` | `true` | no |
 | <a name="input_iam_roles"></a> [iam\_roles](#input\_iam\_roles) | Configuration of the IAM roles, the key of the map is used as the IAM role name. Unless overwritten by setting the name field. | <pre>map(object({<br/>    audience_filters         = optional(list(string), [])<br/>    description              = optional(string, "Role assumed by the IAM OIDC provider")<br/>    name                     = optional(string, null)<br/>    path                     = optional(string, "/")<br/>    permissions_boundary_arn = optional(string, "")<br/>    policy                   = optional(string, null)<br/>    policy_arns              = optional(set(string), [])<br/>    subject_filters          = list(string)<br/>  }))</pre> | `{}` | no |
 | <a name="input_tags"></a> [tags](#input\_tags) | A mapping of tags to assign to all resources. | `map(string)` | `null` | no |
