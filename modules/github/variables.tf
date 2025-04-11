@@ -7,7 +7,6 @@ variable "create_oidc_provider" {
 variable "oidc_provider" {
   type = object({
     client_ids     = optional(list(string), ["sts.amazonaws.com"])
-    name           = optional(string, "GitHub")
     thumbprint_url = optional(string, "https://token.actions.githubusercontent.com/.well-known/openid-configuration")
     url            = optional(string, "https://token.actions.githubusercontent.com")
   })
