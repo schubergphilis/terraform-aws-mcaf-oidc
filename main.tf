@@ -54,7 +54,7 @@ data "aws_iam_policy_document" "assume_role_policy" {
     }
 
     dynamic "condition" {
-      for_each = length(each.value.audience_filters) == 0 ? [each.value.audience_filters] : []
+      for_each = length(each.value.audience_filters) == 0 ? [] : [each.value.audience_filters]
       content {
         test     = "ForAnyValue:StringLike"
         variable = "${local.provider.url}:aud"
