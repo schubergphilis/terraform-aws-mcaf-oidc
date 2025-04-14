@@ -1,6 +1,6 @@
 locals {
   provider             = var.create_oidc_provider ? aws_iam_openid_connect_provider.default["create"] : data.aws_iam_openid_connect_provider.default["create"]
-  thumbprint_url_parse = provider::corefunc::url_parse(var.oidc_provider.thumbprint_url)
+  thumbprint_url_parse = var.create_oidc_provider ? provider::corefunc::url_parse(var.oidc_provider.thumbprint_url) : null
 }
 
 ################################################################################
