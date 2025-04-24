@@ -10,6 +10,7 @@ module "default" {
     for role, config in var.iam_roles : role => merge(config, {
       subject_filters = compact([
         for filter in config.subject_filters :
+        filter.allow_all != false ? "repo:${filter.repository}:*" :
         filter.branch != null ? "repo:${filter.repository}:ref:refs/heads/${filter.branch}" :
         filter.environment != null ? "repo:${filter.repository}:env:${filter.environment}" :
         filter.tag != null ? "repo:${filter.repository}:ref:refs/tags/${filter.tag}" :
