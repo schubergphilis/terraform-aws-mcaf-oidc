@@ -25,6 +25,7 @@ variable "iam_roles" {
 
     subject_filters = list(object({
       repository  = string
+      allow_all   = optional(bool)
       branch      = optional(string)
       environment = optional(string)
       tag         = optional(string)
@@ -37,10 +38,10 @@ variable "iam_roles" {
   validation {
     condition = alltrue([
       for role in values(var.iam_roles) : alltrue([
-        for filter in role.subject_filters : length(compact([filter.branch, filter.environment, filter.tag])) == 1
+        for filter in role.subject_filters : length(compact([filter.allow_all, filter.branch, filter.environment, filter.tag])) == 1
       ])
     ])
-    error_message = "For each subject_filter, exactly one of branch, environment, or tag must be specified."
+    error_message = "For each subject_filter, exactly one of allow_all, branch, environment, or tag must be specified."
   }
 
   validation {
