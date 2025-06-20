@@ -24,10 +24,10 @@ data "aws_iam_openid_connect_provider" "default" {
 resource "aws_iam_openid_connect_provider" "default" {
   for_each = var.create_oidc_provider ? { create = true } : {}
 
-  url             = var.oidc_provider.url
   client_id_list  = var.oidc_provider.client_ids
-  thumbprint_list = [data.tls_certificate.default["create"].certificates[0].sha1_fingerprint]
   tags            = var.tags
+  thumbprint_list = [data.tls_certificate.default["create"].certificates[0].sha1_fingerprint]
+  url             = var.oidc_provider.url
 }
 
 ################################################################################
@@ -70,9 +70,10 @@ module "oidc_role" {
 
   for_each = var.iam_roles
 
-  name                 = coalesce(each.value.name, each.key)
   assume_policy        = data.aws_iam_policy_document.assume_role_policy[each.key].json
   description          = each.value.description
+  max_session_duration = each.value.max_session_duration
+  name                 = coalesce(each.value.name, each.key)
   path                 = each.value.path
   permissions_boundary = each.value.permissions_boundary_arn
   policy_arns          = each.value.policy_arns
