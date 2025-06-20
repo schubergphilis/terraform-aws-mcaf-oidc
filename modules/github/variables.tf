@@ -17,6 +17,7 @@ variable "oidc_provider" {
 variable "iam_roles" {
   type = map(object({
     description              = optional(string, "Role assumed by the GitHub IAM OIDC provider")
+    max_session_duration     = optional(number, null)
     name                     = optional(string, null)
     path                     = optional(string, "/")
     permissions_boundary_arn = optional(string, "")

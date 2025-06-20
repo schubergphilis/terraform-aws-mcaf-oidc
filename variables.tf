@@ -33,6 +33,7 @@ variable "iam_roles" {
   type = map(object({
     audience_filters         = optional(list(string), [])
     description              = optional(string, "Role assumed by the IAM OIDC provider")
+    max_session_duration     = optional(number, null)
     name                     = optional(string, null)
     path                     = optional(string, "/")
     permissions_boundary_arn = optional(string, "")
@@ -42,7 +43,6 @@ variable "iam_roles" {
   }))
   default     = {}
   description = "Configuration of the IAM roles, the key of the map is used as the IAM role name. Unless overwritten by setting the name field."
-
 }
 
 variable "tags" {
