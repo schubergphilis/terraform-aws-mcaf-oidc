@@ -5,6 +5,16 @@ All notable changes to this project will automatically be documented in this fil
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## v0.8.0 - 2026-06-26
+
+### What's Changed
+
+#### 🐛 Bug Fixes
+
+* fix(github): correct environment sub claim and add immutable repositories (#13) @mpsbp127
+
+**Full Changelog**: https://github.com/schubergphilis/terraform-aws-mcaf-oidc/compare/v0.7.0...v0.8.0
+
 ## v0.7.0 - 2025-06-20
 
 ### What's Changed
