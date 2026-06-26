@@ -2,6 +2,41 @@
 
 This document captures required refactoring on your part when upgrading to a module version that contains breaking changes.
 
+## Upgrading to v0.8.0
+
+### Key Changes (v0.8.0)
+
+#### Bug fix: corrected GitHub environment OIDC subject claim mapping in `modules/github`
+
+The `environment` subject filter previously generated an incorrect `sub` claim format:
+
+```
+repo:<org>/<repo>:env:<environment>
+```
+
+This has been corrected to match the actual GitHub OIDC token format:
+
+```
+repo:<org>/<repo>:environment:<environment>
+```
+
+If you are using `environment` in `subject_filters` for the `modules/github` submodule, Terraform will update the IAM role trust policy condition. No variable changes are required — the fix is automatic on the next apply.
+
+#### Feature: immutable GitHub OIDC subject claim support in `modules/github`
+
+GitHub repositories created after July 15, 2026, or that have opted in to immutable subject claims, use a different `sub` claim format that includes numeric owner and repository IDs:
+
+```
+repo:<org>@<owner_id>/<repo>@<repo_id>:environment:<environment>
+```
+
+The `repository` field in `subject_filters` now accepts both formats:
+
+- Mutable: `org/repo`
+- Immutable: `org@owner_id/repo@repo_id`
+
+No variable name changes are required. Update the `repository` value in your `subject_filters` to use the immutable format if your repository has opted in.
+
 ## Upgrading to v0.3.0
 
 ### Key Changes (v0.3.0)

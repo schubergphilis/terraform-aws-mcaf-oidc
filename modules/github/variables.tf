@@ -53,10 +53,10 @@ variable "iam_roles" {
   validation {
     condition = alltrue([
       for role in values(var.iam_roles) : alltrue([
-        for filter in role.subject_filters : length(regexall("^[A-Za-z0-9_.-]+?/([A-Za-z0-9_.:/\\-\\*]+)$", filter.repository)) > 0
+        for filter in role.subject_filters : length(regexall("^[A-Za-z0-9_.\\-]+(?:@[0-9]+)?/[A-Za-z0-9_.\\-]+(?:@[0-9]+)?$", filter.repository)) > 0
       ])
     ])
-    error_message = "For each subject_filter, the repository must be in the organization/repository format."
+    error_message = "For each subject_filter, the repository must be in the organization/repository format. Both mutable (org/repo) and immutable (org@owner_id/repo@repo_id) formats are supported."
   }
 }
 
