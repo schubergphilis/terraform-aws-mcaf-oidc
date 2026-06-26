@@ -12,7 +12,7 @@ module "default" {
         for filter in config.subject_filters :
         filter.allow_all != false ? "repo:${filter.repository}:*" :
         filter.branch != null ? "repo:${filter.repository}:ref:refs/heads/${filter.branch}" :
-        filter.environment != null ? "repo:${filter.repository}:env:${filter.environment}" :
+        filter.environment != null ? "repo:${filter.repository}:environment:${filter.environment}" :
         filter.tag != null ? "repo:${filter.repository}:ref:refs/tags/${filter.tag}" :
         null
       ])
